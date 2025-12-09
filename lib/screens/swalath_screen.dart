@@ -59,7 +59,7 @@ class SwalathScreen extends StatelessWidget {
                 if  (buttonTitles [index] == 'Alamu Swalath') {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const AlamuSwalathScreen()),
+                    MaterialPageRoute(builder: (context) => const StaticQuranPage()),
                   );
                 }
               },
