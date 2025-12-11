@@ -254,10 +254,11 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
 
   static const String arabic7 = 'فَقُلْتُ لَهُ مَنْ هَؤُلَاءِ قَالَ زَوْجَتِي وَابْنَتِي قَالَ فَدَخَلَتَا وَهُمَا تَقُولَانِ لَا إِلَهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ فَقَالَ لَهُمَا كَيْفَ إِيمَانُكُمَا قَالَتَا رَأَيْنَاهُ كَمَا رَأَيْتَ رَأْيَ عَيْنٍ وَإِنْ كَانَ وَعَدَكَ بِقَصْرٍ فَقَدْ وَعَدَنَا بِقَصْرَيْنِ قَالَ فَمَاتَ الرَّجُلُ فِي الْوَقْتِ وَفِي الْغَدِ مَاتَتْ ابْنَتُهُ وَفِي الْيَوْمِ الثَّالِثِ مَاتَتْ زَوْجَتُهُ رَحِمَهُمُ اللهُ تَعَالَى وَرَحِمَنَا مَعَهُمْ الْحَمْدُ لِلَّهِ الَّذِي جَعَلَنَا مِنْ أُمَّةِ مُحَمَّدٍ كُلَّمَا ذَكَرَهُ الذَّاكِرُونَ وَغَفَلَ عَنْ ذِكْرِهِ الْغَافِلُونَ';
 
+
   static const String arabic7baith1 = 
   'أَحْيَى رَبِيعُ الْقَلْبِ شَهْرُ الْمَوْلِدِ\n'
   'جَاءَتْ لِمَوْلِدِهِ الشَّرِيفِ بَشَائِرُ\n'
-    'آيَاتُهُ وَالْمُعْجِزَاتُ كَثِيرَةٌ\n'
+  'آيَاتُهُ وَالْمُعْجِزَاتُ كَثِيرَةٌ\n'
   'الْبَدْرُ شُقَّ بِأَمْرِهِ وَالشَّمْسُ إِذْ\n'
   'وَالْوَحْشُ وَالْأَشْجَارُ قَد سَجَدَتْ لَهُ\n'
   'وَمِنَ الْيَسِيرِ سَقَى وَأَطْعَمَ جَيْشَهُ\n'
@@ -340,7 +341,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                               fontSize: 24,
                               height: 2.5,
                               fontWeight: FontWeight.bold,
-                              color: Colors.redAccent,
+                              color: Colors.lightBlueAccent,
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -378,7 +379,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                 style: GoogleFonts.amiri(
                                   fontSize: 15.2,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent,
+                                  color: Colors.redAccent,
                                 ),
                                 ),
                                 Container(
@@ -421,7 +422,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                 style: GoogleFonts.amiri(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent,
+                                  color: Colors.redAccent,
                                 ),
                                 ),
                                 Container(
@@ -478,7 +479,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                 style: GoogleFonts.amiri(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent,
+                                  color: Colors.redAccent,
                                 ),
                                 ),
                                 Container(
@@ -521,7 +522,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                 style: GoogleFonts.amiri(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent,
+                                  color: Colors.redAccent,
                                 ),
                                 ),
                                 Container(
@@ -579,7 +580,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                 style: GoogleFonts.amiri(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent,
+                                  color: Colors.redAccent,
                                 ),
                                 ),
                                 Container(
@@ -622,7 +623,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                 style: GoogleFonts.amiri(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent,
+                                  color: Colors.redAccent,
                                 ),
                                 ),
                                 Container(
@@ -683,7 +684,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                 wordSpacing: 7,
                                 fontStyle: FontStyle.italic,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.lightBlueAccent
+                                color: Colors.redAccent
                               ),
                             ),
                           const SizedBox(height: 10),
@@ -728,7 +729,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                   height: 1,
                                   wordSpacing: 10,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent,
+                                  color: Colors.redAccent,
                                 ),
                                 ),
                                 Container(
@@ -782,7 +783,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                   height: 1,
                                   wordSpacing: 10,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent,
+                                  color: Colors.redAccent,
                                 ),
                                 ),
                                 Container(
@@ -845,7 +846,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                 wordSpacing: 3,
                                 fontStyle: FontStyle.italic,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.lightBlueAccent
+                                color: Colors.redAccent
                               ),
                             ),
                             const SizedBox(height: 10),
@@ -890,7 +891,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                   height: 1,
                                   wordSpacing: 1,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent,
+                                  color: Colors.redAccent,
                                 ),
                                 ),
                                 Container(
@@ -943,7 +944,7 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                                   height: 1,
                                   wordSpacing: 3,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent,
+                                  color: Colors.redAccent,
                                 ),
                                 ),
                                 Container(
@@ -985,10 +986,10 @@ class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
                           Text(
                             'دُعَاءٌ',
                             textDirection: TextDirection.rtl,
-                            style: GoogleFonts.amiri(
+                            style: GoogleFonts.amiriQuran(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
-                              color: Colors.redAccent,
+                              color: Colors.lightBlueAccent,
                             ),
                             textAlign: TextAlign.center,
                             softWrap: true,

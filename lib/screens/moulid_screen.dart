@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'moulid/ajmeer_moulid_screen.dart';
 import 'moulid/manqoos_moulid_screen.dart';
+import 'moulid/badar_moulid_screen.dart';
 
 class MoulidScreen extends StatelessWidget {
   const MoulidScreen({super.key});
@@ -9,7 +10,7 @@ class MoulidScreen extends StatelessWidget {
   // List of button titles
   final List<String> buttonTitles = const [
     'Ajmeer Moulid',
-    'Badar Moulid',
+    'Badr Moulid',
     'Davoodul Hakeem (r) Moulid',
     'Maoudavoor Moulid',
     'Mampuram Moulid',
@@ -69,6 +70,11 @@ class MoulidScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => ManqoosMoulidScreen()),
+                  );
+                } else if (buttonTitles[index] == 'Badr Moulid') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BadrMoulidScreen()),
                   );
                 }
               },
