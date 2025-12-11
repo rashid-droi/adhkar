@@ -1,161 +1,1021 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ManqoosMoulidScreen extends StatelessWidget {
-  const ManqoosMoulidScreen({super.key});
+// --- StyledContainer Widget ---
+class StyledContainer extends StatefulWidget {
+  final String? text;
+  final Widget? child;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  final TextAlign textAlign;
+  final double? height;
+  final EdgeInsetsGeometry? margin;
+  final Color? textColor;
+  final double? lineHeight;
+  final Color? borderColor;
+  final bool showShadow;
+  final EdgeInsetsGeometry? padding;
+
+  const StyledContainer({
+    super.key,
+    this.text,
+    this.child,
+    this.fontSize = 18.0,
+    this.fontWeight = FontWeight.bold,
+    this.textAlign = TextAlign.justify,
+    this.height,
+    this.margin,
+    this.textColor,
+    this.lineHeight = 1.5,  // Reduced from 2.1 to 1.5 for tighter spacing
+    this.borderColor,
+    this.showShadow = true,
+    this.padding,
+  })  : assert(text != null || child != null,
+            'Either text or child must be provided to StyledContainer');
 
   @override
+  _StyledContainerState createState() => _StyledContainerState();
+}
+
+class _StyledContainerState extends State<StyledContainer> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Manqoos Moulid',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
+    Widget content = widget.child ??
+        Text(
+          widget.text!,
+          textAlign: widget.textAlign,
+          style: GoogleFonts.amiri(
+            fontSize: widget.fontSize,
+            height: widget.lineHeight,
+            fontWeight: widget.fontWeight,
+            color: widget.textColor,
           ),
-        ),
-        backgroundColor: const Color(0xFFE9E5DC),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+          textDirection: TextDirection.rtl,
+        );
+
+    return Container(
+      margin: widget.margin ?? const EdgeInsets.fromLTRB(16, 12, 16, 12),
+      constraints: BoxConstraints(
+        minHeight: widget.height ?? 50,
       ),
-      backgroundColor: const Color(0xFFE9E5DC),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Content
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              margin: const EdgeInsets.only(bottom: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Arabic Text
-                  Text(
-                    'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
-                    style: GoogleFonts.amiri(
-                      fontSize: 22,
-                      height: 2.0,
-                      color: const Color(0xFF5D4037),
+      child: CustomPaint(
+        painter: BorderPainter(
+            borderColor: widget.borderColor ?? Theme.of(context).primaryColor),
+        child: Container(
+          width: double.infinity,
+          padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 22),  // Use provided padding or default
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12.0),
+            boxShadow: widget.showShadow
+                ? [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 2,
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
                     ),
-                    textAlign: TextAlign.center,
-                    textDirection: TextDirection.rtl,
-                  ),
-                  const SizedBox(height: 20),
-                  
-                  // English Translation
-                  Text(
-                    'In the name of Allah, the Most Gracious, the Most Merciful',
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      color: const Color(0xFF5D4037).withOpacity(0.8),
-                      fontStyle: FontStyle.italic,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 30),
-                  
-                  // Moulid Content
-                  _buildMoulidSection(
-                    arabic: 'اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَىٰ نَبِيِّنَا مُحَمَّدٍ',
-                    english: 'O Allah, send blessings and peace upon our Prophet Muhammad',
-                  ),
-                  const SizedBox(height: 16),
-                  
-                  _buildMoulidSection(
-                    arabic: 'وَآلِهِ وَأَصْحَابِهِ أَجْمَعِينَ',
-                    english: 'and upon his family and all his companions',
-                  ),
-                  const SizedBox(height: 20),
-                  
-                  // Additional Content
-                  Text(
-                    'Manqoos Moulid is a blessed gathering to celebrate the birth and life of the Prophet Muhammad (peace be upon him). It is a time for remembrance, sending blessings upon the Prophet, and reflecting on his noble character and teachings.',
-                    style: GoogleFonts.poppins(
-                      fontSize: 15,
-                      color: const Color(0xFF5D4037),
-                      height: 1.6,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
-                ],
-              ),
-            ),
-            
-            // Favorite Button
-            ElevatedButton.icon(
-              onPressed: () {
-                // Add to favorites functionality
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Added to Favorites')),
-                );
-              },
-              icon: const Icon(Icons.favorite_border, color: Colors.white),
-              label: Text(
-                'Add to Favorites',
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF8B5A2B),
-                padding: const EdgeInsets.symmetric(vertical: 14.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-              ),
-            ),
-          ],
+                  ]
+                : null,
+          ),
+          child: content,
         ),
       ),
     );
   }
+}
+
+// --- CustomPainter for the Decorative Border ---
+class BorderPainter extends CustomPainter {
+  final Color borderColor;
+
+  BorderPainter({required this.borderColor});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = borderColor.withOpacity(0.6)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8.0;
+
+    final rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    canvas.drawRect(rect, paint);
+
+    final innerPaint = Paint()
+      ..color = borderColor.withOpacity(0.3)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+    final innerRect = Rect.fromLTWH(4, 4, size.width - 8, size.height - 8);
+    canvas.drawRect(innerRect, innerPaint);
+
+    final sidePatternPaint = Paint()
+      ..color = borderColor.withOpacity(0.4)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
+
+    for (double i = 20; i < size.height - 20; i += 50) {
+      canvas.drawLine(Offset(4, i), Offset(4, i + 20), sidePatternPaint);
+      canvas.drawLine(Offset(size.width - 4, i),
+          Offset(size.width - 4, i + 20), sidePatternPaint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
+// --- Main Screen Widget ---
+class ManqoosMoulidScreen extends StatefulWidget {
+  const ManqoosMoulidScreen({super.key});
+
+  @override
+  State<ManqoosMoulidScreen> createState() => _ManqoosMoulidScreenState();
+}
+
+class _ManqoosMoulidScreenState extends State<ManqoosMoulidScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+  // 1. ARABIC PROSE INTRODUCTION (HAMD & PRAISE FOR KHWAJA MUINUDDIN CHISHTI)
+  static const String arabic1 =
+      'سُبْحَانَ الَّذِي أَطْلَعَ فِي شَهْرِ رَبِيعِ الأَوَّلِ قَمَرَ نَبِيَّ الْهُدَى وَأَوْجَدَ نُورَهُ قَبْلَ خَلْقِ الْعَالَمِ وَسَمَّاهُ مُحَمَّدًا وَأَخْرَجَهُ فِي آخِرِ الزَّمَانِ كَمَا قَدَّرَ وَأَبْدَى وَالْبَسَهُ خِلْعَةَ الْجَمَالِ الَّتِي لَمْ يُلْبِسْهَا أَحَدًا فَوُلِدَ بِوَجْهِ أَخْجَلَ قَمَرًا وَ فَرْقَدًا الا هُوَ الَّذِي تَوَسَّلَ بِهِ آدَمُ وَافْتَخَرَ بِكَوْنِهِ وَالِدًا وَاسْتَغَاثَ بِهِ نُوحٌ فَنَجَى مِنَ الرَّدَى وَكَانَ فِي صُلْبِ إِبْرَاهِيمَ حِينَ أُلْقِيَ فِي النَّارِ فَعَادَ وَصَارَ لَهْبُهَا مُحْمَدًا وَرَاتْ أُمُّهُ آمِنَةُ حِينَ حَمَلَتْ بِهِ مَلَائِكَةَ السَّمَاءِ مَدَدًا وَدَخَلَ عَلَيْهَا الأَنْبِيَاءُ وَهُمْ يَقُولُونَ لَهَا إِذَا وَضَعْتِ شَمْسَ الْفَلَاحِ وَالْهُدَى فَسَمِّيهِ مُحَمَّدًا قَالَ اللَّهُ عَزَّ وَجَلَّ لَقَدْ جَاءَكُمْ رَسُولٌ مِّنْ أَنْفُسِكُمْ عَزِيزٌ عَلَيْهِ مَا عَنِتُمْ حَرِيصٌ عَلَيْكُمْ بِالْمُؤْمِنِينَ رَؤُوفٌ رَّحِيمٌ وَرُوِيَ عَنِ النَّبِيِّ الله أَنَّهُ قَالَ كُنْتُ نُورًا بَيْنَ يَدَيِ اللَّهِ عَزَّوَجَلَّ قَبْلَ أَنْ يَخْلُقَ آدَمَ بِالْغَيْ عَامٍ يُسَبِّحُ اللَّهَ ذَلِكَ النُّورُ وَتُسَبِّحُ الْمَلَائِكَةُ بِتَسْبِيحِهِ فَلَمَّا خَلَقَ اللَّهُ تَعَالَى آدَمَ الْقَى ذَلِكَ النُّورَ فِي طِينَتِهِ فَأَهْبَطَنِيَ اللَّهُ فِي صُلْبِ آدَمَ إِلَى الْأَرْضِ وَجَعَلَنِي فِي السَّفِينَةِ فِي صُلْبِ نُوحٍ وَجَعَلَنِي فِي صُلْبِ الْخَلِيلِ إِبْرَاهِيمَ حِينَ قُذِفَ بِهِ فِي النَّارِ وَلَمْ يَزَلْ يَنْقُلُنِي رَبِّي مِنَ الْأَصْلَابِ الْكَرِيمَةِ الْفَاخِرَةِ إِلَى الْأَرْحَامِ الزَّكِيَّةِ الطَّاهِرَةِ حَتَّى أَخْرَجَنِيَ اللَّهُ مِنْ بَيْنِ أَبَوَيَّ وَلَمْ يَلْتَقِيَا عَلَى سِفَاحٍ قَطُّ ';
+
+  static const String arabicbaith1 =
+       'أَنْتَ تَطْلُعُ بَيْنَنَا فِي الْكَوَاكِبِ كَالْبُدُورِ\n'
+       'أَنْتَ أَمْ أَمْ أَبُ مَا رَأَيْنَا فِيهِمَا\n'
+       'أَنْتَ مُنْجِينَا غَدًا مِنْ شَفَاعَتِكَ الصَّفَا\n'
+       'ارْتَكَبْتُ عَلَى الْخَطَا غَيْرَ حَصْرٍ وَعَدَدْ\n'
+       'إِنَّنَا نَرْجُو إِلَى كَأْسِ حَوْضِكَ لِلْعَطَشِ\n'
+       'الشَّفَاعَةَ هَبْ لَنَا فِي الْقِيَامَةِ مُشْفِقًا\n'
+       'الصَّلَاةُ عَلَى النَّبِي كُلَّ وَقْتٍ دَائِمًا';
+
+  static const String arabicbaith2 =
+       'بَلْ وَأَشْرَفُ مِنْهُ يَا سَيِّدِي خَيْرَ النَّبِي\n'
+       'مِثْلَ حُسْنِكَ قَطَّ يَا سَيِّدِي خَيْرَ النَّبِي\n'
+       'مَنْ لَنَا مِثْلُكَ يَا سَيِّدِي خَيْرَ النَّبِي\n'
+       'لَكَ أَشْكُوفِيهِ يَا سَيِّدِي خَيْرَ النَّبِي\n'
+       'يَوْمَ نَشْرِ كِتَابِي يَا سَيِّدِي خَيْرَ النَّبِي\n'
+       'وَاهُ لَنَا إِنْ ضَاعَ يَا سَيِّدِي خَيْرَ النَّبِي\n'
+       'لَاحَ نَجْمُ فِي السَّمَا سَيِّدِي خَيْرَ النَّبِي';
+
+  static const String arabic2 = 
+  ' رَوَى كَعْبُ الْأَحْبَارِ رَضِيَ اللَّهُ عَنْهُ لَمَّا أَرَادَ اللَّهُ تَعَالَى إِظْهَارَ النُّورِ المُخْزُونِ وَابْرَازَ الْجَوْهَرِ الْمَكْنُونِ مِنْ عَبْدِ اللَّهِ إِلَى بَطْنِ آمِنَةَ أَطْهَرِ فَتَاتٍ فِي الْعَرَبِ وَذَلِكَ فِي لَيْلَةِ الْجُمُعَةِ مِنْ شَهْرِ رَجَبٍ أَمَرَ رِضْوَانَ السَّلام فَفَتَحَ أَبْوَابَ الْجِنَانِ وَتَزَيَّنَتِ الْحُورُ وَالْوِلْدَانُ وَدُقَّتْ بَشَائِرُ الْأَفْرَاحِ وَزَهَرَتْ كَوَاكِبُ الصَّبَاحِ وَنَادَى مُنَادٍ فِي السَّمَاءِ وَالْأَرْضِ أَلَا إِنَّ النُّورَ الْمَكْنُونَ مِنْهُ سَيِّدُ الْبَشَرِ فِي بَطْنِ آمِنَةَ قَدِ اسْتَقَرَّ وَلَمَّا انْتَقَلَ نُورُ نَبِيِّنَا مُحَمَّدٍ ﷺ مِنْ عَبْدِ اللَّهِ إِلَى بَطْنِ آمِنَةَ اهْتَزَّ الْعَرْشُ طَرَبًا وَاسْتِبْشَارًا وَزَادَ الْكُرْسِيُّ هَيْبَةً وَوَقَارًا وَامْتَلَثَتِ السَّمَوَاتُ أَنْوَارًا وَضَجَّتِ الْمَلَائِكَةُ تَهْلِيلدًا وَاسْتِغْفَارًا فَأَصْبَحَتْ آمِنَةُ تِلْكَ الَّيْلَةَ وَالْأَنْوَارُ تَلُوحُ فِي جَبْهَتِهَا الْمُؤْتَمِنَةِ وَآمِنَتْ بِهِ مِنَ الْمَخَاوِفِ الْكَامِنَةِ وَظَهَرَتْ لِانْتِقَالِ نُورِهِ الْآيَاتُ وَتَبَاشَرَتْ بِهِ جَمِيعُ الْمَخْلُوقَاتِ وَلَمَّا حَمَلَتْ بِهِ ﷺ فِي رَجَبِ الْهَنَا بُشِّرَتْ فِي شَعْبَانَ بِنَيْلِ الْمُنَا وَقِيلَ لَهَا فِي رَمَضَانَ لَقَدْ حَمَلْتِ بِالْمُطَهَّرِ مِنَ الدَّنَسِ وَالْخَنَا وَسَمِعَتِ الْمَلَائِكَةَ فِي شَوَّالٍ يُبَشِّرُونَهَا بِالظَّفْرِ بِغَايَةِ الْمُنَا وَرَاتِ الْخَلِيلَ إِبْرَاهِيمَ السَّلامِ فِي ذِي الْقَعْدَةِ وَهُوَ يَقُولُ لَهَا أَبْشِرِي بِصَاحِبِ الْأَنْوَارِ وَالْوَقَارِ وَالسَّنَا وَآتَيْهَا فِي ذِي الحِجَّةِ مُوسَى الْكَلِيمُ السلام وَأَعْلَمَهَا بِرُتْبَةِ مُحَمَّدٍ وَجَاهِهِ الْأَسْنَى وَنَادَيهَا فِي مُحَرَّمٍ جِبْرِيلُ عَلَيْهِ السَّلَامُ بِأَنَّ وَقْتَ وِلَادَتِهَا قَددَّنَا  وَاصْطَفَتِ الْمَلَائِكَةُ مَنْزِلَهَا فِي صَفَرٍ فَعَلِمَتْ أَنَّ مَوْعِدَ السُّرُورِ قَدْ قَرُبَ وَدَنَا فَلَمَّا هَلَّ رَبِيعُ الْأَوَّلِ أَضَاءَتِ الْأَرْضُ وَالسَّمَا وَأَشْرَقَتِ الْبَيْتُ وَالصَّفَا ثُمَّ لَمَّا جَاءَ وَقْتُ الْوِلَادَةِ وَخَرَجَ مَنْشُورُ السَّعَادَةِ وَجَدَّ بِآمِنَةَ أَمْرُ الْوِلَادَةِ وَحَانَ بُرُوزُ شَمْسِ السَّعَادَةِ تَلَالَا الْحَقُّ نُورًا أَضَاءَ وَنُشِرَتْ لَهُ فِي الْكَوْنِ أَعْلَامُ الرَّضَى وَإِذَا بِطَائِرٍ أَبْيَضَ قَد سَّقَطَ مِنَ الْهَوَى فَمَرَّ بِجَنَاحَيْهِ عَلَى بَطْنِ آمِنَةً مُسْرِعًا فَضَرَبَهَا الْمَخَاضُ لَيْلَةَ الْإِثْنَيْنِ الثَّانِي عَشَرَ مِنْ شَهْرِ رَبِيعِ الْأَوَّلِ وَوَلَدَتْ صَبِيحَتَهَا نَبِيَّ الثَّقَلَيْنِ ﷺ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ ';
+
+  static const String arabic2baith1 =
+      'وُلِدَ الْحَبِيبُ السَّيِّدُ الْمُتَعَبِّدُ\n'
+      'جِبْرِيلُ نَادَى فِي مَنَصَّةِ حُسْنِهِ\n'
+      'هَذَا كَحِيلُ الطَّرْفِ هَذَا الْمُصْطَفَى\n'
+      'هَذَا جَمِيلُ النَّعْتِ هَذَا الْمُرْتَضَى\n'
+      'هَذَا الَّذِي خُلِعَتْ عَلَيْهِ مَلَابِسُ\n'
+      'قَالَتْ مَلَئِكَةُ السَّمَاءِ بِأَسْرِهِمْ\n'
+      'بُشْرَى لِأُمَّتِهِ بِرُؤْيَةِ وَجْهِهِ\n'
+      'وَلَدَتْهُ مَخْتُونًا وَمَكْحُولًا كَمَا\n'
+      'صَلَّى عَلَيْكَ اللَّهُ يَا عَلَمَ الْهُدَى';
+
+  static const String arabic2baith2 =
+      'وَالنُّورُ مِنْ وَجَنَاتِهِ يَتَوَقَّدُ\n'
+      'هَذَا مَلِيحُ الْكَوْنِ هَذَا أَحْمَدُ\n'
+      'هَذَا جَزِيلُ الْوَصْفِ هَذَا السَّيِّدُ\n'
+      'هَذَا مَلِيحُ الْوَجْهِ هَذَا الْأَوْحَدُ\n'
+      'وَنَفَائِسٌ فَنَظِيرُهُ لَا يُوجَدُ\n'
+      'وُلِدَ الْحَبِيبُ وَمِثْلُهُ لَا يُولَدُ\n'
+      'هَذَا هُوَ الْجَاهُ الْعَظِيمُ الْأَزْيَدُ\n'
+      'قَدْ جَاءَ فِي الْخَبَرِ الصَّحِيحِ الْمُسْنَدُ\n'
+      'مَا نَاحَ طَيْرُ فِي الْغُصُونِ يُغَرِّدُ';
+
+  static const String arabic3 =
+' وَرُوِيَ أَنَّ آمِنَةَ رَأَتْ حِينَ وَضَعَتْهُ اللَّهُ نُورًا أَضَاءَ لَهُ قُصُورُ بُصْرَى مِنْ أَرْضِ الشَّامِ وَرُوِيَ أَنَّ آمِنَةَ قَالَتْ لَمَّا وَضَعْتُهُ مَدَدتُّ عَيْنِي لِأَنْظُرَ وَلَدِي فَلَمْ أَرَهُ ثُمَّ وَجَدتُّهُ فِي الْمِخْدَعِ وَهُوَ مَكْحُولٌ مَدْهُونٌ مَخْتُونُ مَلْفُوفٌ بِثَوْبٍ مِّنَ الصُّوفِ الْأَبْيَضِ الْيَنَ مِنَ الْحَرِيرِ يَفُوحُ الطَّيبُ مِنْ جَنَابِهِ ) فَجَعَلْتُ أَنْظُرُ إِلَيْهِ وَإِذَا مُنَادٍ يُنَادِي اخْفُوهُ عَنْ أَعْيُنِ النَّاسِ قَالَتْ فَمَا كَانَ غَيْبَتُهُ وَحُضُورُهُ إِلَّا كَلَمْحِ الْبَصَرِ وَلَمَّا كُنْتُ مُتَحَيَّرَةً مِنْ ذَلِكَ إِذًا بِثَلَاثَةِ نَفَرٍ قَد دَّخَلُوا عَلَيَّ كَأَنَّ وُجُوهَهُمْ أَقْمَارُ وَفِي يَدِ أَحَدِهِمْ أَبْرِيقٌ مِّنَ الْفِضَّةِ وَمَعَ الْآخَرِ طَشْتُ مِّنَ الزَّبَرْجَدِ الْأَخْضَرِ وَفِي يَدِ الثَّالِثِ حَرِيرَةُ بَيْضَاءُ مَطْوِيَّةٌ فَنَشَرَهَا فَإِذَا هِيَ خَاتَمُ يُحَيِّرُ أَعْيُنَ النَّاظِرِينَ مِنْ شِدَّةِ نُورِهِ حَمَلَ ابْنِي وَنَا وَلَهُ لِصَاحِبِ الطَّشْتِ وَأَنَا أَنْظُرُ إِلَيْهِ فَغَسَلَهُ مِنْ ذَلِكَ الْمَاءِ الَّذِي فِي الْإِبْرِيقِ سَبْعَ مَرَّاتٍ ثُمَّ قَالَ لِصَاحِبِهِ اخْتِمْ بَيْنَ كَتِفَيْهِ بِخَاتَمِ النُّبُوَّةِ فَهُوَ خَاتِمُ النَّبِيِّينَ وَسَيِّدُ أَهْلِ السَّمَوَاتِ وَالْأَرْضِ أَجْمَعِينَ وَقِيلَ لَمَّا وُلِدَ خَمِدَت تَلْكَ اللَّيْلَةَ نَارُ فَارِسَ بَعْدَ الضَّرَامِ وَلَمْ تَكُنْ خَمَدَتْ قَبْلَ ذَلِكَ بِالْفَيْ عَامٍ وَارْتَجَ ايوَانُ كِسْرَى وَسَقَطَتْ مِنْهُ أَرْبَعَ عَشَرَةَ شُرْفَةً وَغَاضَتْ بُحَيْرَةُ سَاوَةَ وَأَصْبَحَتْ أَصْنَامُ الدُّنْيَا كُلُّهَا مَنْكُوسَةً وَرُمِيَتِ الشَّيَاطِينُ مِنَ السَّمَاءِ بِالشُّهُبِ التَّوَاقِبِ وَانْبَلَجَ صُبْحُ الْحَقِّ وَبَطَلَ مَا كَانَ يَعْمَلُهُ كُلُّ كَاذِبٍ وَرُوِيَ عَنْ يَحْيَى بْنِ عُرْوَةَ أَنَّ نَفَرًا مِنْ قُرَيْشٍ كَانُوا عِنْدَ صَنَمٍ مِنْ أَصْنَامِهِمْ قَدِ اتَّخَذُوا ذَلِكَ الْيَوْمَ عِيدًا مِنْ أَيَّامِهِمْ يَنْحَرُونَ فِيهِ الْجَزُورَ وَيَأْكُلُونَ وَيَشْرَبُونَ وَقَدْ عَكَفُوا عَلَيْهِ يَخُوضُونَ وَيَلْعَبُونَ فَدَخَلُوا عَلَيْهِ فَوَجَدُوهُ مَكْبُوبًا عَلَى وَجْهِهِ فَانْكَرُوا عِنْدَ ذَلِكَ عَلَيْهِ وَرَدُّوهُ إِلَى حَالِهِ فَانْقَلَبَ انْقِلَابَ صَاغِرٍ فَفَعَلُوا ذَلِكَ ثَلَاثًا وَهُوَ لَا يَسْتَقِيمُ فَلَمَّا رَأَوْا ذَلِكَ ابْدَوْا حُزْنًا وَتَالُّمًا وَأَصْبَحَ الْعِيدُ الَّذِي كَانُوا فِيهِ مَأْتَمًا فَقَالَ عُثْمَانُ بْنُ الْحُوَيْرِثِ مَا لَهُ قَدْ أَكْثَرَ التَّنَكُسَ إِنَّ هَذَا لِأَمْرٍ حَدَثَ وَانْشَدَ وَقَلْبُهُ يَصْلَى بِالنَّارِ';
+
+  static const String arabic3baith1 =
+      'آيَا صَنَمَ الْعِيدِ الَّذِي صَفَّ حَوْلَهُ\n'
+      'تَنَكَّسْتَ مَقْلُوبًا فَمَا ذَاكَ قُلْ لَنَا\n'
+      'فَإِنْ كُنْتَ مِنْ ذَنْبٍ أَتَيْنَا فَإِنَّنَا\n'
+      'وَإِنْ كُنْتَ مَغْلُوبًا وَنُكِّسْتَ صَاغِرًا\n'
+      'تَرَدَّى لِمَوْلُودٍ أَضَاءَتْ بِنُورِهِ\n'
+      'وَنَارُ جَمِيعِ الفُرْسِ قَدْ خَمِدَتْ لَهُ\n'
+      'فَيَالَ قُصَيَّ ارْجِعُوا عَنْ ضَلَالِكُمْ';
+
+  static const String arabic3baith2 =
+      'صَنَادِيدُ مِنْ وَفْدٍ بَعِيدٍ وَمِنْ قُرْبٍ\n'
+      'فَمِنْ حُزْنِنَا قَددَّرَتِ الْعِيرُ بِالسُّحْبِ\n'
+      'نَبُوءُ بِإِقْرَارٍ وَنَلْوِي عَنِ الذَّنْبِ\n'
+      'فَمَا أَنْتَ فِي الْأَوْثَانِ بِالسَّيِّدِ الرَّبِّ\n'
+      'جَمِيعُ فِجَاجِ الْأَرْضِ خَوْفًا مِنَ الرُّعْبِ\n'
+      'وَقَدْبَاتَ شَاهُ الْفُرْسِ فِي أَعْظَمِ الْكَرْبِ\n'
+      'وَهُبُوا إِلَى الْإِسْلَامِ وَالْمَنْزِلِ الرَّحْبِ';
+
+  static const String arabic4 =
+'قَالَ ابْنُ إِسْحَاقَ لَمَّا كَانَ الْيَوْمُ السَّابِعُ ذَبَحَ عَنْهُ جَدُّهُ عَبْدُ الْمُطَّلِبِ وَقَامَ بِأَمْرِهِ كَمَا يَجِبُ وَدَعَا قُرَيْشًا وَأَطْعَمَهُمْ وَأَكْرَمَهُمْ فَلَمَّا أَكَلُوا قَالُوا يَا عَبْدَ الْمُطَّلِبِ مَا سَمَّيْتَ ابْنَكَ قَالَ سَمَّيْتُهُ مُحَمَّدًا فَقَالُوا قَدْ رَغِبْتَ عَنْ أَسْمَاءِ آبَائِكَ قَالَ أَرَدتُّ أَنْ يَحْمَدَهُ مَنْ عَلَى الْغَبْرَاءِ';
   
-  Widget _buildMoulidSection({required String arabic, required String english}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // Arabic Text
-        Text(
-          arabic,
-          style: GoogleFonts.amiri(
-            fontSize: 22,
-            height: 2.0,
-            color: const Color(0xFF8B5A2B),
-            fontWeight: FontWeight.bold,
+  static const String arabic5 = 
+  'فَلَمَّا كَانَ وَقْتُ ظُهُورِ أَسْرَارِهِ وَاشْرَاقُ الْكَوْنِ بِأَنْوَارِهِ فَبَيْنَمَا آمِنَةُ فِي بَيْتِهَا وَحِيدَةٌ مُسْتَأْنِسَةٌ بِبَرَكَاتِهِ وَهِيَ فَرِيدَةٌ وَلَمْ تَشْعُرْ إِلَّا وَقَدْ أَشْرَقَ فِي بَيْتِهَا النُّورُ وَعَمَّهَا الْفَرَحُ وَالسُّرُورُ وَأَقْبَلَتِ الْمَلَائِكَةُ وَالْحُورُ وَحَفَّ حُجْرَتَهَا أَنْوَاعُ الطُّيُورِ وَهِيَ تَسْمَعُ لِازْدِ حَامِهِمْ وَاحْتِفَالِهِمْ بِقُدُومِ الْحَبِيبِ هَمْسًا وَكَيْفَ لَا وَ سَيِّدُ الْعَالَمِينَ فِي بَيْتِهَا أَمْسَى';
+
+  static const String arabic4baith1 =
+      'إِنَّ بَيْتًا أَنْتَ سَاكِنُهُ\n'
+      'وَجْهُكَ الْوَضَّاحُ حُجَّتُنَا\n'
+      'وَمَرِيضًا أَنْتَ زَائِرُهُ\n'
+      'فَازَ مَنْ قَدْ كُنْتَ بِغْيَتَهُ\n'
+      'بَاذِلًا فِي الْحُبِّ مُهْجَتَهُ\n'
+      'يَا كَرِيمَ الْجُودِ رَاحَتَهُ\n'
+      'أَنْتَ مُنْجِينَا مِنَ الْحَرَقِ\n'
+      'ذَنْبُنَا مَاحِي لَيَمْنَعُنَا\n'
+      'حُبُّكُمْ فِي قَلْبِنَا مَحْوُ\n'
+      'صَبُّكُمْ وَاللَّهِ لَمْ يَخِبْ\n'
+      'إِنَّنَا نَرْجُو لِشَافِعِنَا\n'
+      'وَهُوَ نَجَّانَا مِنَ الْبَلْوَى\n'
+      'رَبِّ وَارْزُقْنَا زِيَارَتَهُ\n'
+      'صَلِّ يَا رَبِّي عَلَى الْهَادِي';
+
+  static const String arabic4baith2 =
+      'لَيْسَ مُحْتَاجًا إِلَى السُّرْجِ\n'
+      'يَوْمَ يَأْتِي النَّاسُ بِالْحُجَجِ\n'
+      'قَدْ أَتَاهُ اللَّهُ بِالْفَرَجِ\n'
+      'وَسَمَا فِي أَرْفَعِ الدَّرَج\n'
+      'سَامِحًا بِالرُّوحِ وَالْمُهَجِ\n'
+      'فَكَفَيْتَ الْبَحْرَ وَاللُّجَجِ\n'
+      'مِن لَّهِيبِ النَّارِ وَالْأَجَجِ\n'
+      'مِنْ ذُرُوفِ الدَّمْعِ وَالْعَجَجِ\n'
+      'مِنْ رَئِينِ الذَّنْبِ وَالْحَرَجِ\n'
+      'لِكَمَالِ الْحُسْنِ وَالْبَهَجِ\n'
+      'لِصَلَاحِ الدِّينِ وَالنَّهَجِ\n'
+      'طِيبُهُ فِي الْعَالَمِ الْأَرَجِ\n'
+      'قَبْلَ قَبْضِ الرُّوحِ وَالْخَرَج\n'
+      'لِسَبِيلِ الْحَقِّ وَالْفَرَجِ';
+
+
+  static const String arabic6 = 'قَالَ عَلِيُّ بْنُ زَيْدٍ رَحِمَهُ اللَّهُ تَعَالَى كَانَ إِلَى جَانِبِي رَجُلٌ ذِيٌّ وَكُنْتُ فِي شَهْرِ رَبِيعِ الْأَوَّلِ ادْعُو الْفُقَرَاءَ وَأَعْمَلُ مَوْلِدًا لِلنَّبِيِّ ﷺ فَقَالَ لِي ذَلِكَ الذَّمِّيُّ لِمَ تَفْعَلُ فِي هَذَا الشَّهْرِ دُونَ غَيْرِهِ فَقُلْتُ فَرَحًا بِمَوْلِدِ رَسُولِ اللَّهِ ﷺ لِأَنَّهُ وُلِدَ فِي هَذَا الشَّهْرِ فَجَعَلَ يَهْزَأُ بِي فَعَزَّ عَلَيَّ ذَلِكَ وَوَجَدتُّ مِنْ ذَلِكَ أَمْرًا عَظِيمًا فَلَمَّا نِمْتُ فِي تِلْكَ اللَّيْلَةِ رَأَيْتُ رَسُولَ اللهِ ﷺ فِي الْمَنَامِ فَقَالَ لِي مَابِكَ فَأَخْبَرْتُهُ بِخَبَرِي مَعَ الذَّمِّيِّ فَقَالَ لَا تَحْزَنْ فَإِنَّهُ يَأْتِي إِلَيْكَ غَدًا وَهُوَ مُؤْمِنٌ ) قَالَ فَاسْتَيْقَظْتُ وَقَد تَّزَايَدَ وَجْدِي وَأَنَا انْتَظِرُ إِنْجَازَ وَعْدِي وَسُحْبُ الْمَدَامِعِ قَدْ جَرَتْ عَلَى خَدِّي وَإِذَا بِالْبَابِ يُطْرَقُ وَالذَّمِّيُّ يَقُولُ افْتَحْ فَقَدْ زَالَ صَدَى قَلْبِي إِنْ كَانَ الْحَبِيبُ قَدْ كَانَ عِنْدَكَ فَالْبَارِحَةَ قَدْ كَانَ عِنْدِي قَالَ فَفَتَحْتُ لَهُ الْبَابَ فَدَخَلَ وَهُوَ يَقُولُ لَا إِلَهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ فَقُلْتُ لَهُ مَا شَأْنُكَ قَالَ رَأَيْتُ اللَّيْلَةَ رَجُلًا حَسَنَ الْوَجْهِ طَيِّبَ الرَّائِحَةِ عَظِيمَ الْهَيْبَةِ أَزَجَ الْحَاجِبَيْنِ سَهْلَ الْخَدَّيْنِ إِذَا تَكَلَّمَ فَعَلَيْهِ الْبَهَاءُ وَإِذَا صَمَتَ فَعَلَيْهِ الْوَقَارُ حُلْو الْمَنْطِقِ إِذَا طَلَعَ تَقُولُ هَذَا الْبَدْرُ الْمُنِيرُ وَإِذَا مَشَى يَفُوحُ مِنْهُ الْمِسْكُ وَالْعَنْبَرُ مَا أَحْسَنَ وَجْهَهُ وَمَا أَطْيَبَ رَائِحَتَهُ فَارَدتُ أَنْ أُقَبِّلَ يَدَيْهِ قَالَ أَتُقَبِّلُ يَدِي وَأَنْتَ عَلَى غَيْرِ دِينِي فَقُلْتُ مَنْ أَنْتَ الَّذِي مَنَّ اللَّهُ عَلَيَّ بِكَ قَالَ أَنَا الَّذِي أُرْسِلْتُ رَحْمَةً لِّلْعَالَمِينَ أَنَا سَيِّدُ الْأَوَّلِينَ وَالْآخِرِينَ أَنَا مُحَمَّدُ خَاتِمُ النَّبِيِّينَ وَرَسُولُ رَبِّ الْعَالَمِينَ فَقُلْتُ لَا إِلَهَ إِلَّا اللهُ مُحَمَّدٌ رَسُولُ اللَّهِ فَفَتَحَ يَدَيْهِ وَعَانَقَنِي ثُمَّ قَالَ هَذِهِ الْجَنَّةُ وَذَاكَ الْقَصْرُ لَكَ فَقُلْتُ مَا عَلَامَةُ ذَلِكَ قَالَ أَنْ تَمُوتَ غَدًا قَالَ صَاحِبُ الْحِكَايَةِ فَبَيْنَمَا هُوَ يُحَدِّثُنِي وَإِذَا بِالْبَابِ يُطْرَقُ وَقَائِلُ يَقُولُ ';
+
+
+  static const String arabic7 = 'فَقُلْتُ لَهُ مَنْ هَؤُلَاءِ قَالَ زَوْجَتِي وَابْنَتِي قَالَ فَدَخَلَتَا وَهُمَا تَقُولَانِ لَا إِلَهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ فَقَالَ لَهُمَا كَيْفَ إِيمَانُكُمَا قَالَتَا رَأَيْنَاهُ كَمَا رَأَيْتَ رَأْيَ عَيْنٍ وَإِنْ كَانَ وَعَدَكَ بِقَصْرٍ فَقَدْ وَعَدَنَا بِقَصْرَيْنِ قَالَ فَمَاتَ الرَّجُلُ فِي الْوَقْتِ وَفِي الْغَدِ مَاتَتْ ابْنَتُهُ وَفِي الْيَوْمِ الثَّالِثِ مَاتَتْ زَوْجَتُهُ رَحِمَهُمُ اللهُ تَعَالَى وَرَحِمَنَا مَعَهُمْ الْحَمْدُ لِلَّهِ الَّذِي جَعَلَنَا مِنْ أُمَّةِ مُحَمَّدٍ كُلَّمَا ذَكَرَهُ الذَّاكِرُونَ وَغَفَلَ عَنْ ذِكْرِهِ الْغَافِلُونَ';
+
+  static const String arabic7baith1 = 
+  'أَحْيَى رَبِيعُ الْقَلْبِ شَهْرُ الْمَوْلِدِ\n'
+  'جَاءَتْ لِمَوْلِدِهِ الشَّرِيفِ بَشَائِرُ\n'
+    'آيَاتُهُ وَالْمُعْجِزَاتُ كَثِيرَةٌ\n'
+  'الْبَدْرُ شُقَّ بِأَمْرِهِ وَالشَّمْسُ إِذْ\n'
+  'وَالْوَحْشُ وَالْأَشْجَارُ قَد سَجَدَتْ لَهُ\n'
+  'وَمِنَ الْيَسِيرِ سَقَى وَأَطْعَمَ جَيْشَهُ\n'
+  'وَلَهُ الْوَسِيلَةُ وَالْفَضِيلَةُ وَالْعُلَى\n'
+  'أَوْصَافُهُ مَا يَنْتَهِي تَعْدَادُهَا\n'
+  'يَا سَيِّدَ السَّادَاتِ جِئْتُكَ قَاصِدًا\n'
+  'قَدْ حَلَّ بِي مَا قَدْ عَلِمْتَ مِنَ الْأَذَى\n'
+  'مَا لِي سِوَى حُبِّي لَدَيْكَ وَسِيلَةٌ\n'
+  'إِنِّي نَزِيلُكَ وَالنَّزِيلُ لَدَيْكَ\n'
+  'فَعَلَيْكَ مِنَّا كُلَّ وَقْتٍ دَائِمًا\n'
+  'وَعَلَى صَحَابَتِكَ الْكِرَامِ جَمِيعِهِمْ';
+
+  static const String arabic7baith2 = 
+  'كُلَّ الْأَنَامِ بِذِكْرِ مَوْلِدِ أَحْمَدِ\n'
+  'وَخَوَارِقُ الْعَادَاتِ لَيْلَةَ مَوْلِدِ\n'
+  'شَهِدَتْ بِصِحَتِهَا عُقُولُ الْحُسَدِ\n'
+  'غَرُبَتْ لَهُ رُدَّتْ بِغَيْرِ تَرَدُّدٍ\n'
+  'وَعَلَيْهِ قَد سَلَّمْنَ بَعْدَ تَشَهُدٍ\n'
+  'حَتَّى اكْتَفَوْا وَيَسِيرُهُ لَمْ يَنْفَدِ\n'
+  'وَمَقَامُهُ الْمَحْمُودُ يَوْمَ الْمَوْعِدِ\n'
+  'فَالْمَدْحُ يَقْصُرُ عَنْ بُلُوغِ الْمَقْصِدِ\n'
+  'أَرْجُو حِمَاكَ فَلَا تُخَيِّبْ مَقْصَدِي\n'
+  'وَالظُّلْمِ وَالضُّعْفِ الشَّدِيدِ فَأَسْعِدِ\n'
+  'فَامْنُنْ عَلَيَّ بِفَضْلِ جُودِكَ أَسْعَدِ\n'
+  'خَيْرَ الْأَنَامِ بِكُلِّ خَيْرٍ يَغْتَدِي\n'
+  'أَزْكَى الصَّلَاةِ مَعَ السَّلَامِ السَّرْمَدِ\n'
+  'وَالتَّابِعِينَ لَهُمْ بِخَيْرٍ فَاجْهَدِ';
+
+  static const String dua1 =
+ 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ اللَّهُمَّ صَلَّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِ سَيِّدِنَا مُحَمَّدٍ صَلَوةً تُنْجِينَا بِهَا مِنْ جَمِيعِ الْأَهْوَالِ وَالْبَلِيَّاتِ وَتُسَلِّمُنَا بِهَا مِنْ جَمِيعِ الْأَسْقَامِ وَالْآفَاتِ وَتُطَهِّرُنَا بِهَا مِنْ جَمِيعِ السَّيِّئَاتِ وَتَغْفِرُ لَنَا بِهَا جَمِيعَ الْخَطِيئَاتِ وَتَقْضِي لَنَا بِهَا جَمِيعَ الْحَاجَاتِ وَتَرْفَعُنَا بِهَا عِنْدَكَ أَعْلَى الدَّرَجَاتِ وَتُبَلِّغُنَا بِهَا أَقْصَى الْغَايَاتِ مِنْ جَمِيعِ الْخَيْرَاتِ فِي الْحَيَوةِ وَبَعْدَ الْمَمَاتِ اللَّهُمَّ إِنَّا نَتَوَسَّلُ إِلَيْكَ بِاسْمِكَ الْعَظِيمِ وَبِجَاهِ نَبِيِّكَ الْكَرِيمِ وَوَلِيِّكَ الْعَظِيمِ أَنْ تُكَفِّرَ عَنَّا الذُّنُوبَ وَتَسْتُرَ الْعُيُوبَ وَتُحَسِّنَ الْأَخْلَاقَ وَتُوَسِّعَ الْأَرْزَاقَ وَتَشْفِيَ الْأَسْقَامَ وَتُعَافِي الْآلَامِ وَأَنْ تَدْفَعَ عَنَّا وَعَنْ أَهْلِ بَلَدِنَا وَبَيْتِنَا هَذَا السُّمَّ النَّاقِعَ وَالدَّاءَ الْقَامِعَ وَالْوَبَاءَ الْقَاطِعَ إِنَّكَ مُجِيبُ سَامِعُ وَأَنْ تَصْرِفَ عَنَّا الطَّاعُونَ وَالْبَلَاءَ وَتَعْصِمَنَا مِنْ انْزَالِ قَهْرِكَ وَالْوِبَاءَ وَتَحْجُبَنَا بِنُورِكَ مِنْ شَرِّ عَدُوِّنَا وَشَرِّ الْمَلْعُونِ وَمِنْ شَرِّ الْوَبَاءِ وَالطَّاعُونِ اللَّهُمَّ لَا تُؤَاخِذْنَا بِسُوءِ أَفْعَالِنَا وَلَا تُهْلِكْنَا بِخَطَايَانَا اللَّهُمَّ إِنَّا نَسْأَلُكَ أَنْ  تُعِيذَنَا مِنْ عَذَابِ الْقَبْرِ وَتُؤْمِنَنَا مِنْ فَزَعِ الْأَكْبَرِ وَتُنْجِيَنَا عَنْ دَارِ الْبَوَارِ وَتُسْكِنَنَا الْفِرْدَوْسَ مِنْ دَارِ الْقَرَارِ بِحَقِّ مُحَمَّدٍ وَآلِهِ الْأَبْرَارِ وَصَلَّى اللَّهُ عَلَى خَيْرٍ خَلْقِهِ سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِين ';
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    const Color pageBackgroundColor = Colors.white;
+    const Color borderColor = Color(0xFF9E895C);
+
+    return Scaffold(
+      backgroundColor: pageBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: pageBackgroundColor,
+        title: Text(
+          'Manqoos Moulid',
+          style: GoogleFonts.anekMalayalam(
+            color: borderColor,
+            fontSize: 18.0,
           ),
-          textAlign: TextAlign.center,
-          textDirection: TextDirection.rtl,
         ),
-        const SizedBox(height: 8),
-        
-        // English Translation
-        Text(
-          english,
-          style: GoogleFonts.poppins(
-            fontSize: 15,
-            color: const Color(0xFF5D4037).withOpacity(0.9),
-            fontStyle: FontStyle.italic,
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Scrollbar(
+              controller: _scrollController,
+              thumbVisibility: true,
+              thickness: 6.0,
+              radius: const Radius.circular(3.0),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
+                child: Column(
+                  children: [
+                    // First Container (Prose) - Arabic 1
+                    StyledContainer(
+                      fontSize: 18.0,
+                      lineHeight: 2.1,
+                      borderColor: borderColor,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            '             بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ      ',
+                            textDirection: TextDirection.rtl,
+                            style: GoogleFonts.amiriQuran(
+                              fontSize: 24,
+                              height: 2.5,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            arabic1,
+                            textDirection: TextDirection.rtl,
+                            style: GoogleFonts.amiri(
+                              fontSize: 18.0,
+                              height: 2.2,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.justify,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Second Container (Couplets/Baith) - Arabic Baith 1 & 2
+                    StyledContainer(
+                      borderColor: borderColor,
+                      margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),
+                      showShadow: true,
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 22), 
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 10),
+                                Text('عَلَى الْمُصْطَفَى الْمُخْتَارِ خَيْرِ الْبَرِيَّةِ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 15.2,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: borderColor,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 4.0),
+                                  width: double.infinity,
+                                ),
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: arabicbaith2,
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 15.2,
+                                      height: 3,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Vertical Separator Line
+                          Container(
+                            width: 1,
+                            color: borderColor,
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            height: 360, // Fixed height instead of double.infinity
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 10),
+                                Text('صَلوةٌ  وَتَسْلِيمُ  وَأَزْكَى  تَحِيَّةٍ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: borderColor,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 4.0),
+                                  width: double.infinity,
+                                ),
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: arabicbaith1,
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 15.2,
+                                      height: 3,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Third Container (Prose) - Arabic 2
+                    StyledContainer(
+                      text: arabic2,
+                      fontSize: 18.0,
+                      lineHeight: 2.2,
+                      borderColor: borderColor,
+                      fontWeight: FontWeight.bold,
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                    ),
+
+                    // Fourth Container (Couplets/Baith) - Arabic Baith 2 (set 1 & 2)
+                    StyledContainer(
+                      borderColor: borderColor,
+                      margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),
+                      showShadow: true,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                              Text('مُنْجِي الْخَلَائِقِ مِنْ جَهَنَّمَ فِي غَدٍ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: borderColor,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 4.0),
+                                  width: double.infinity,
+                                ),
+                                const SizedBox(height: 10),
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: arabic2baith2,
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 16,
+                                      height: 3,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Vertical Separator Line - FIXED: Removed infinite height
+                          Container(
+                            width: 1,
+                            color: borderColor,
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            height: 470, // Fixed height instead of double.infinity
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                              Text('يَا رَبِّ صَلِّ عَلَى النَّبِيِّ مُحَمَّدٍ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: borderColor,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 4.0),
+                                  width: double.infinity,
+                                ),
+                                const SizedBox(height: 10),
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: arabic2baith1,
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 16,
+                                      height: 3,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Fifth Container (Prose) - Arabic 3
+                    StyledContainer(
+                      text: arabic3,
+                      fontSize: 18.0,
+                      lineHeight: 2.2,
+                      borderColor: borderColor,
+                      fontWeight: FontWeight.bold,
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                    ),
+
+                    // Sixth Container (Couplets/Baith) - Arabic Baith 3 (set 1 & 2)
+                    StyledContainer(
+                      borderColor: borderColor,
+                      margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),
+                      showShadow: true,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text('عَلَى الْمُصْطَفَى الْمُخْتَارِ خَيْرِ الْبَرِيَّةِ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: borderColor,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 4.0),
+                                  width: double.infinity,
+                                ),
+                                const SizedBox(height: 10),
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: arabic3baith2,
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 14.5,
+                                      height: 3,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Vertical Separator Line - FIXED: Removed infinite height
+                          Container(
+                            width: 1,
+                            color: borderColor,
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            height: 330, // Fixed height instead of double.infinity
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text('صَلَوَاتِي عَلَى  النَّبِيِّ  وَسَلَامِي\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: borderColor,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 4.0),
+                                  width: double.infinity,
+                                ),
+                                const SizedBox(height: 10),
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: arabic3baith1,
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 14.5,
+                                      height: 3,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Seventh Container (Prose) - Arabic 4
+                    StyledContainer(
+                      borderColor: borderColor,
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                      showShadow: true,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(arabic4,
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.justify,
+                          style: GoogleFonts.amiri(
+                            fontSize: 18.0,
+                            height: 2.2,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          ),
+                          const SizedBox(height: 10),
+                            Text(
+                                  'مُحَمَّدًا  سَمَّوْا   نَبِيَّ   الْهُدَى   ۞ وَهُوَ  أَحَقُّ  النَّاسِ  بِالْحَمْدِ\n'
+                                 'صَلَّى عَلَيْهِ اللَّهُ مَا أَشْرَقَتْ ۞ شَمْسُ الضُّحَى فِي ذَلِكَ السَّعْدِ',
+                              textDirection: TextDirection.rtl,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.amiri(
+                                fontSize: 14,
+                                height: 2.2,
+                                wordSpacing: 7,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.lightBlueAccent
+                              ),
+                            ),
+                          const SizedBox(height: 10),
+                        Text(arabic4,
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.justify,
+                          style: GoogleFonts.amiri(
+                            fontSize: 18.0,
+                            height: 2.2,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Eighth Container (Couplets/Baith) - Arabic Baith 4 (set 1 & 2)
+                    StyledContainer(
+                      borderColor: borderColor,
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                      showShadow: true,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    children: [
+                                    ],
+                                  ),
+                                ),
+                              Text('سَيِّدِ الْكَوْنَيْنِ وَالسُّرُجِ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  height: 1,
+                                  wordSpacing: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: borderColor,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 4.0),
+                                  width: double.infinity,
+                                ),
+                                const SizedBox(height: 10),
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: arabic4baith2,
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 16,
+                                      height: 3,
+                                      wordSpacing: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Vertical Separator Line - FIXED: Removed infinite height
+                          Container(
+                            width: 1,
+                            color: borderColor,
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            height: 710, // Fixed height instead of double.infinity
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    children: [
+                                    ],
+                                  ),
+                                ),
+                              Text('صَلِّ رَبَّ الْعَالَمِينَ عَلَى\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  height: 1,
+                                  wordSpacing: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: borderColor,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 4.0),
+                                  width: double.infinity,
+                                ),
+                                const SizedBox(height: 10),
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: arabic4baith1,
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 16,
+                                      height: 3,
+                                      wordSpacing: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    StyledContainer(
+                      borderColor: borderColor,
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                      showShadow: true,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              arabic6,
+                              textDirection: TextDirection.rtl,
+                              textAlign: TextAlign.justify,
+                              style: GoogleFonts.amiri(
+                                fontSize: 18.0,
+                                height: 2.2,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'إِنْ كُنْتَ انْتَ حَظِيتَ يَوْمًا بِاللَّقَا ۞ زَالَ الْجَفَا عَنَّا وَقَدْ زَالَ الشَّقَا',
+                              textDirection: TextDirection.rtl,
+                              textAlign: TextAlign.justify,
+                              style: GoogleFonts.amiri(
+                                fontSize: 14,
+                                height: 2.2,
+                                wordSpacing: 3,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.lightBlueAccent
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              arabic7,
+                              textDirection: TextDirection.rtl,
+                              textAlign: TextAlign.justify,
+                              style: GoogleFonts.amiri(
+                                fontSize: 18.0,
+                                height: 2.2,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                                        StyledContainer(
+                      borderColor: borderColor,
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                      showShadow: true,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    children: [
+                                    ],
+                                  ),
+                                ),
+                              Text('مُنْجِي الْخَلَائِقِ مِنْ جَهَنَّمَ فِي غَدٍ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  height: 1,
+                                  wordSpacing: 1,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: borderColor,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 4.0),
+                                  width: double.infinity,
+                                ),
+                                const SizedBox(height: 10),
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: arabic7baith2,
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 15.8,
+                                      height: 3,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Vertical Separator Line - FIXED: Removed infinite height
+                          Container(
+                            width: 1,
+                            color: borderColor,
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            height: 710, // Fixed height instead of double.infinity
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    children: [
+                                    ],
+                                  ),
+                                ),
+                              Text('يَا رَبِّ صَلِّ عَلَى النَّبِيِّ مُحَمَّدٍ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  height: 1,
+                                  wordSpacing: 3,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: borderColor,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 4.0),
+                                  width: double.infinity,
+                                ),
+                                const SizedBox(height: 10),
+                                RichText(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: arabic7baith1,
+                                    style: GoogleFonts.amiri(
+                                      fontSize: 15.8,
+                                      height: 3,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Ninth Container (Dua)
+                    StyledContainer(
+                      fontSize: 18.0,
+                      lineHeight: 2.1,
+                      borderColor: borderColor,
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            'دُعَاءٌ',
+                            textDirection: TextDirection.rtl,
+                            style: GoogleFonts.amiri(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.redAccent,
+                            ),
+                            textAlign: TextAlign.center,
+                            softWrap: true,
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            dua1,
+                            textDirection: TextDirection.rtl,
+                            style: GoogleFonts.amiri(
+                              fontSize: 18.0,
+                              height: 2.3,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.justify,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 66),
+                  ],
+                ),
+              ),
+            ),
           ),
-          textAlign: TextAlign.center,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'moulid/ajmeer_moulid_screen.dart';
+import 'moulid/manqoos_moulid_screen.dart';
 
 class MoulidScreen extends StatelessWidget {
   const MoulidScreen({super.key});
@@ -64,8 +65,14 @@ class MoulidScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(builder: (context) => AjmeerMoulidScreen()),
                   );
+                } else if (buttonTitles[index] == 'Manqoos Moulid') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ManqoosMoulidScreen()),
+                  );
                 }
               },
+              
               style: ElevatedButton.styleFrom(
                 backgroundColor:  Colors.white,
                 foregroundColor: const Color(0xFF8B5A2B),

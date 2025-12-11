@@ -16,7 +16,7 @@ class StyledContainer extends StatefulWidget {
   final bool showShadow;
 
   const StyledContainer({
-    Key? key,
+    super.key,
     this.text,
     this.child,
     this.fontSize = 18.0,
@@ -25,12 +25,11 @@ class StyledContainer extends StatefulWidget {
     this.height,
     this.margin,
     this.textColor,
-    this.lineHeight = 2.1,
+    this.lineHeight = 1.5,  // Reduced from 2.1 to 1.5 for tighter spacing
     this.borderColor,
     this.showShadow = true,
   })  : assert(text != null || child != null,
-            'Either text or child must be provided to StyledContainer'),
-        super(key: key);
+            'Either text or child must be provided to StyledContainer');
 
   @override
   _StyledContainerState createState() => _StyledContainerState();
@@ -62,7 +61,7 @@ class _StyledContainerState extends State<StyledContainer> {
             borderColor: widget.borderColor ?? Theme.of(context).primaryColor),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),  // Reduced vertical padding
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12.0),
@@ -127,38 +126,55 @@ class BorderPainter extends CustomPainter {
 
 // --- Main Screen Widget ---
 class AjmeerMoulidScreen extends StatefulWidget {
-  const AjmeerMoulidScreen({Key? key}) : super(key: key);
+  const AjmeerMoulidScreen({super.key});
 
   @override
   State<AjmeerMoulidScreen> createState() => _AjmeerMoulidScreenState();
 }
 
 class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
   // 1. ARABIC PROSE INTRODUCTION (HAMD & PRAISE FOR KHWAJA MUINUDDIN CHISHTI)
   static const String arabic1 =
       'الْحَمْدُ لِلَّهِ الَّذِي خَلَقَ الإِنْسَانَ وَعَلَّمَهُ البَيَانَ وَبَعَثَ مِنْهُمْ مَنْ يَهْدِي إِلَى الْإِحْسَانِ وَخَتَمَ النُّبُوَّةَ بِالرَّسُولِ المَبْعُوثِ فِي آخِرِ الزَّمَانِ وَالْمُنَزَّلِ عَلَيْهِ سُورَةُ الْفُرْقَانِ نَبِيِّنَا مُحَمَّدٍ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ الْمُخْتَارِ مِنْ مَعَدَّ بْنِ عَدْنَانُ الَّذِي أَظْهَرَ الْعَدْلَ وَأَمَاتَ الطَّغْيَانَ وَأَكَبَّ الْبَاطِلَ وَالْعِصْيَانَ وَأَبَادَ الْبُهْتَانَ وَعِبَادَةَ الأَوْثَانِ وَمَيَّزَ الْخَلِيقَةَ إِلَى جَنَّةٍ وَرِضْوَانٍ أَوْ إِلَى حُفْرَةٍ مِنَ النِّيرَانِ وَاصْطَفَى مِنْ أُمَّتِهِ مَنْ يَقُومُ بِمَا وَرَدَ بِهِ الْقُرْءَانُ إِلَى يَوْمِ الْبَعْثِ وَالْحُسْبَانِ وَخَلَّصَ مِنْهُمْ مَنْ يُظْهِرُ الْحَقَّ بِمَرَاتِبِ التَّبْيَانِ مِنَ الأَوْلِيَاءِ وَالأَقْطَابِ وَالأَغْيَاتِ وَالْأَعْوَانِ وَمِنْ جُمْلَتِهِمْ مَنْ قَامَ بِقِيَادَةِ أَنَاسِ الْهِنْدِ إِلَى أَرْشَدِ الْأَدْيَانِ وَغَيْرِهَا مِنَ الْبُلْدَانِ الْمُنْهَمِكِينَ عَلَى عِبَادَةِ الْأَصْنَامِ وَالْحَيَوَانِ وَإِشَاعَةِ الإِسْلَامِ وَالإِيمَانِ فِي تِلْكَ الْأَحْيَانِ وَالْأَقْرَانِ وَأَوْقَدَ لَهُ وُقُودَ مَحَارِبِ النِّيرَانِ حَتَّى دَخَلَ النَّاسُ فِي دِينِ اللَّهِ أَفْوَاجًا بِالْإِيمَانِ وَالْإِتْقَانِ الشَّيْخُ الْوَلِيُّ قُطْبُ الزَّمَانِ وَسُلْطَانُ الْهِنْدِ مَوْلَانَا غَرِيبٌ نَوَازُ خَاجًا مُعِينُ الدِّينِ الْجِشْتِي الْحَسَنُ السَّنْجَرِي الأَجْمِيرِي قَدَّسَ اللَّهُ سِرَّهُ الْمُسْتَعَانُ وَنَفَعَنَا بِعُلُومِهِ وَأَنْوَارِهِ وَبَرَكَاتِهِ فِي الدُّنْيَا وَفِي دَارِ الْحَيْرَانِ وَصَلَّى اللهُ وَسَلَّمَ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَمَنِ تَّبَعَهُمْ بِإِحْسَانٍ مَا دَامَ النَّجْمُ وَالشَّجَرُ يَسْجُدَانِ ';
 
   static const String arabicbaith1 =
-      'صَلوةٌ  وَتَسْلِيمُ  وَأَزْكَى  تَحِيَّةٍ\n'
       'حَمِدتُ  إِلَهِي  كُلَّ  يَوْمٍ  وَلَيْلَةٍ\n'
       'وَنَشْكُرُهُ  شُكْرًا  يَفِي  كُلَّ نِعْمَةٍ\n'
       'وَمَنْ رَامَ يُوفِيهَا بِحُسْنِ الْمَقَالَةِ\n'
       'وَأَرْسَلَ خَيْرَ النَّاسِ كُلِّ الْخَلِيقَةِ\n'
-      'وَأُمَّتُهُ قَدْ  أُخْرِجَتْ خَيْرَ أُمَّةِ\n';
+      'وَأُمَّتُهُ قَدْ  أُخْرِجَتْ خَيْرَ أُمَّةِ\n'
+      'وَفَضَّلَ مِنْهَا بَعْضَ أَهْلِ الْعِنَايَةِ\n'
+      'وَلا رَيْبَ مِنْهُمْ قُطْبُ هِنْدِ الْحُكُومَةِ\n'
+      'مِنَ الْعَرَبِ قَدْ جَا مِنْ أَوَامِرِ رَوْضَةٍ\n'
+      'وَقَاتَلَ أَهْلَ الزَّيْغِ مِنْ بَعْدِنُزْلَةٍ\n'
+      'وَلَمَّا قَضَى مَا قَدْ تَوَلَّى بِدَوْلَةٍ\n'
+      'أَفَاضَ عَلَيْنَا اللَّهُ مِنْ فَضْلِ بَرَكَةٍ\n'
+      'وَصَلَّى عَلَى خَتْمِ الرِّسَالَةِ دَوْمَةٍ\n';
 
   static const String arabicbaith2 =
-      'عَلَى الْمُصْطَفَى الْمُخْتَارِ خَيْرِ الْبَرِيَّةِ\n'
       'عَلَى مَا  هَدَانَا  لِلطَّرِيقِ  الْقَوِيمَةِ\n'
       'وَلَا يُنْهِهَا  حَدُّ  وَعَدُّ  النَّهَايَةِ\n'
       'فَلَا رَيْبَ تَعْلُوهَا بِزَيْدِ  الإِطَاقَةِ\n'
       'رَفِيقًا  شَفِيعًا  رَحْمَةً  لِلْبَرِيَّةِ\n'
-      'لِدِينِ الْهُدَى يَهْدُونَ حَتَّى الْقِيَمَةِ\n';
+      'لِدِينِ الْهُدَى يَهْدُونَ حَتَّى الْقِيَمَةِ\n'
+      'بِإِعْطَا وِلَآيَاتٍ وَنَيْلِ الْكَرَامَةِ\n'
+      'فَخَاجَا مُعِينُ الدِّينِ أَجْمِيرَ بَلْدَة\n'
+      'لِخَيْرِ الْوَرَى طُرًّا مَقَامًا لِدَعْوَةِ\n'
+      'لِإِعْلَاءِ كَلِمَاتِ الْإِلَهِ بِوَحْدَةٍ\n'
+      'ثَوَى فِي تَرَى الْأَجْمِيرِ جَوْدَ الْوِلَايَةِ\n'
+      'بِرِضْوَانِهِ عَنْهُ بِدَارِ السَّلَامَةِ\n'
+      'وَسَلَّمَ عَلَى آلِ وَصَحْبِ وَقُدْوَةٍ\n';
 
-  static const String arabic2 =
-      'وَوُلِدَ رَضِيَ اللَّهُ عَنْهُ فِي بَلْدَةِ سَنْجَرَ مِنْ مَمَالِيكِ إِصْفَهَانَ وَخُرَاسَانَ كَمَا عُلِمَ مِنْ دِيوَانِ بَعْضِ الْإِخْوَانِ سَنَةَ سَبْعِ وَثَلاثِينَ وَخَمْسَمِأَةٍ مِنَ الْهِجْرَةِ صَبِيحَةَ يَوْمِ الْإِثْنَيْنِ الرَّابِعَ عَشَرَ مِنْ رَجَبٍ وَهُوَابْنُ الشَّيْخِ غِيَاثِ الدِّينِ أَحْمَدَ السَّنْجَرِي بْنِ حُسَيْنِ أَحْمَدَ بْنِ نَجْمِ الدِّينِ طَاهِرِ بْنِ عَبْدِ الْعَزِيزِ حُسَيْنِ بْنِ مُحَمَّدِ الْمَهْدِي حَسَنِ الْعَسْكَرِي بْنِ عَلِيَّ الْهَادِي بْنِ مُحَمَّدِ الْجَوَادِ بْنِ عَلِيَّ الرِّضَا بْنِ مُوسَى الْكَاظِمِ بْنِ جَعْفَرِ الصَّادِقِ بْنِ مُحَمَّدِ الْبَاقِرِ بْنِ عَلِيَّ زَيْنِ الْعَابِدِينِ بْنِ الْإِمَامِ الْحُسَيْنِ سِبْطِ خَاتِمِ الْمُرْسَلِينَ بْنِ الْإِمَامِ عَلَيَّ كَرَّمَ اللَّهُ وَجْهَهُ وَابْنُ سَيِّدَتِنَا أُمَّ الْوَرَعِ مَاهُ نُورُ رَحِمَهَا اللهُ تَعَالَى بِنْتِ السَّيِّدِ دَاوُدَ بْنِ السَّيِّدِ عَبْدِ اللَّهِ الْحَنْبَلِي مِنْ بَطْنِ الْحَسَنِ بْنِ الْإِمَامِ عَلَيَّ زَوْجٍ بِنْتِ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ السَّيِّدَةِ فَاطِمَةَ الْكُبْرَى الَّتِي قَالَ فِي فَضْلِهَا رَسُولُ اللَّهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ فَاطِمَةُ بِضْعَةٌ مِنِّي فَهِيَ قَطْرَةً مِنْ دَمِ رَسُولِ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ شَفِيعِ الْمُذْنِبِينَ وَمَحَبَّةُ أَهْلِهِ وَعِتْرَتِهِ وَاجِبَةٌ عَلَى أُمَّتِهِ وَعَلَى جَمِيعِ الْمُؤْمِنِينَ قَالَ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ مَنْ أَحَبَّ أَهْلَ بَيْتِي فَبِحُبِّي أَحَبَّهُمْ وَمَنْ أَبْغَضَهُمْ فَبِبُغْضِي أَبْغَضَهُمْ جَعَلَنَا مِنْ الْمُحِيِّينَ وَالْمُهْتَدِينَ وَلَمَّا بَلَغَ إِحْدَى عَشْرَةَ سَنَةً تُوُفِّيَ وَالِدَاهُ وَبَقِيَ لَهُ مِنَ التَّرِكَةِ بُسْتَانٌ وَأَنْفَقَهُ فِي سَبِيلِ اللَّهِ مَعَ مَا عِنْدَهُ مِنْ بَضَائِعِ الْأَلْوَانِ وَابْتَغَى مِنَ اللَّهِ التَّقَرُّبَ وَالْوُصُولَ بِهَجْرَانِ مَا يُذَلُّ عِنْدَ الرَّحْمَنِ ثُمَّ تَوَجَّهَ إِلَى بُخَارَى لِتَحْصِيلِ الْعُلُومِ الدِّينِيَّةِ وَأَسْرَارِ السُّنَّةِ وَالْقُرْءَانِ وَأَمْضَى فِيهِ عِدَّةً مِنَ الْأَزْمَانِ وَحَفِظَ الْقُرْءَانَ مِنَ الشَّيْخِ الْفَاضِلِ حُسَامِ الدِّينِ الْبُخَارِي قُدَّسَ سِرُّهُ وَتَمَهَّرَ فِيهِ ثُمَّ ارْتَحَلَ وَاجْتَهَدَ فِي تَخْرِيجٍ أَنْوَارِ الْعِرْفَانِ مِنْ بِحَارِ الرِّيَاضَاتِ وَالْمُرَاقَبَاتِ وَالْإِتْقَانِ حَتَّى بَلَغَ مِنَ الْمَلِكِ الدَّيَّانِ';
+  static const String arabic2 = 'وَوُلِدَ رَضِيَ اللَّهُ عَنْهُ فِي بَلْدَةِ سَنْجَرَ مِنْ مَمَالِيكِ إِصْفَهَانَ وَخُرَاسَانَ كَمَا عُلِمَ مِنْ دِيوَانِ بَعْضِ الْإِخْوَانِ سَنَةَ سَبْعِ وَثَلاثِينَ وَخَمْسَمِأَةٍ مِنَ الْهِجْرَةِ صَبِيحَةَ يَوْمِ الْإِثْنَيْنِ الرَّابِعَ عَشَرَ مِنْ رَجَبٍ وَهُوَابْنُ الشَّيْخِ غِيَاثِ الدِّينِ أَحْمَدَ السَّنْجَرِي بْنِ حُسَيْنِ أَحْمَدَ بْنِ نَجْمِ الدِّينِ طَاهِرِ بْنِ عَبْدِ الْعَزِيزِ حُسَيْنِ بْنِ مُحَمَّدِ الْمَهْدِي حَسَنِ الْعَسْكَرِي بْنِ عَلِيَّ الْهَادِي بْنِ مُحَمَّدِ الْجَوَادِ بْنِ عَلِيَّ الرِّضَا بْنِ مُوسَى الْكَاظِمِ بْنِ جَعْفَرِ الصَّادِقِ بْنِ مُحَمَّدِ الْبَاقِرِ بْنِ عَلِيَّ زَيْنِ الْعَابِدِينِ بْنِ الْإِمَامِ الْحُسَيْنِ سِبْطِ خَاتِمِ الْمُرْسَلِينَ بْنِ الْإِمَامِ عَلَيَّ كَرَّمَ اللَّهُ وَجْهَهُ وَابْنُ سَيِّدَتِنَا أُمَّ الْوَرَعِ مَاهُ نُورُ رَحِمَهَا اللهُ تَعَالَى بِنْتِ السَّيِّدِ دَاوُدَ بْنِ السَّيِّدِ عَبْدِ اللَّهِ الْحَنْبَلِي مِنْ بَطْنِ الْحَسَنِ بْنِ الْإِمَامِ عَلَيَّ زَوْجٍ بِنْتِ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ السَّيِّدَةِ فَاطِمَةَ الْكُبْرَى الَّتِي قَالَ فِي فَضْلِهَا رَسُولُ اللَّهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ فَاطِمَةُ بِضْعَةٌ مِنِّي فَهِيَ قَطْرَةً مِنْ دَمِ رَسُولِ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ شَفِيعِ الْمُذْنِبِينَ وَمَحَبَّةُ أَهْلِهِ وَعِتْرَتِهِ وَاجِبَةٌ عَلَى أُمَّتِهِ وَعَلَى جَمِيعِ الْمُؤْمِنِينَ قَالَ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ مَنْ أَحَبَّ أَهْلَ بَيْتِي فَبِحُبِّي أَحَبَّهُمْ وَمَنْ أَبْغَضَهُمْ فَبِبُغْضِي أَبْغَضَهُمْ جَعَلَنَا مِنْ الْمُحِيِّينَ وَالْمُهْتَدِينَ وَلَمَّا بَلَغَ إِحْدَى عَشْرَةَ سَنَةً تُوُفِّيَ وَالِدَاهُ وَبَقِيَ لَهُ مِنَ التَّرِكَةِ بُسْتَانٌ وَأَنْفَقَهُ فِي سَبِيلِ اللَّهِ مَعَ مَا عِنْدَهُ مِنْ بَضَائِعِ الْأَلْوَانِ وَابْتَغَى مِنَ اللَّهِ التَّقَرُّبَ وَالْوُصُولَ بِهَجْرَانِ مَا يُذَلُّ عِنْدَ الرَّحْمَنِ ثُمَّ تَوَجَّهَ إِلَى بُخَارَى لِتَحْصِيلِ الْعُلُومِ الدِّينِيَّةِ وَأَسْرَارِ السُّنَّةِ وَالْقُرْءَانِ وَأَمْضَى فِيهِ عِدَّةً مِنَ الْأَزْمَانِ وَحَفِظَ الْقُرْءَانَ مِنَ الشَّيْخِ الْفَاضِلِ حُسَامِ الدِّينِ الْبُخَارِي قُدَّسَ سِرُّهُ وَتَمَهَّرَ فِيهِ ثُمَّ ارْتَحَلَ وَاجْتَهَدَ فِي تَخْرِيجٍ أَنْوَارِ الْعِرْفَانِ مِنْ بِحَارِ الرِّيَاضَاتِ وَالْمُرَاقَبَاتِ وَالْإِتْقَانِ حَتَّى بَلَغَ مِنَ الْمَلِكِ الدَّيَّانِ';
 
   static const String arabic2baith1 =
-      'مَوْلايَ صَلَّ وَسَلَّمْ دَائِمًا  أَبَدًا\n'
       'بَدَتْ لَنَا فِي رَبِيعٍ غَوْثُ مُفْتَخَرٍ\n'
       'لأَزَالَ مُرْتَقِيًّا  أَعْلَى  مَقَامِ  عُلاَ\n'
       'سِبْطُ الإِمَامِ عَلَيَّ بِنْتِ خَيْرِ الْوَرَى\n'
@@ -178,7 +194,6 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
       'يَارَبِّ فَاقْبَلْ دُعَائِي بِالْمَدِيحِ هُنَا\n';
 
   static const String arabic2baith2 =
-      'عَلَى  حَبِيبِكَ خَيْرِ الْخَلْقِ كُلِّهِم\n'
       'قُطْبُ الإِلَهِ مُعِينُ الدِّينِ أَجْمِيرِي\n'
       'قُطْبُ الإِلَهِ مُعِينُ الدِّينِ أَجْمِيرِي\n'
       'قُطْبُ الإِلَهِ مُعِينُ الدِّينِ أَجْمِيرِي\n'
@@ -201,7 +216,6 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
       'وَحُكِي عَنِ الشَّيْخِ رَضِيَ اللَّهُ عَنْهُ أَنَّهُ اشْتَاقَ إِلَى زِيَارَةِ سَيِّدِ الْمُرْسَلِينَ فَتَوَجَّهَ مِنْ بَغْدَادَ مَعَ بَعْضِ مُرِيدِهِ الْمُحِبِّينَ إِلَى الطَّيْبَةِ الْمَدِينَةِ رَوْضَةِ أَشْرَفِ الْمَخْلُوقِينَ فَبَيْنَمَا هُوَ فِي حَضْرَةِ الْمَقَامِ نُودِيَ مِنَ الرَّوْضَةِ الْمُشَرَّفَةِ أَنِ ادْخُلْ يَا مُعِينَ الدِّينِ فَدَخَلَ مُسَلَّمًا وَمُبَجِّلاً وَسَمِعَ رَدَّ التَّحِيَّةِ وَالْمَقَالَةَ بِأَنِّي وَضَعْتُ عَلَى رَأْسِكَ تَاجَ الْوِلَايَةِ فَارْتَحِلْ بِهَا إِلَى هِنْدِسْتَانَ وَاجْعَلْ مَوْطِنَكَ فِيهَا بِبَلْدَةِ أَجْمِيرْ فِي بَاقِي الْأَزْمَانِ وَسَتُوَفَّى وَتُدْفَنُ فِيهَا وَيَتَبَرَّكُ بِكَ الْإِخْوَانُ وَكُشِفَتْ لَهُ مُرْتَحَلُهُ وَمَقَاصِدُهُ وَحَصَلَتْ مِنْ حَضْرَةِ الْمُصْطَفَى فَاكِهَةَ رُمَّانٍ مِنَ الْجِنَانِ وَأَمَرَهُ بِالدَّعْوَةِ وَإِرْشَادِ مَنْ كَثُرَ عِنَادُهُمْ وَطُغْيَانُهُمْ مِنَ الْهُنُودِ لِدِينِ الأَمَانِ فَانْتَهَى إِلَى الْأَجْمِيرِ وَمَكَثَ فِيهَا مِنَ الْأَعْوَامِ أَرْبَعِينَ سِنِينَ يَدْعُو النَّاسَ إِلَى دِينِ اللهِ وَيُقَاتِلُ أَعْدَانَهُ حَتَّى أَنْ نَادَاهُ مُنَادِى أَحْسَنِ الْخَالِقِينَ نَوَّرَ اللَّهُ مَرْقَدَهُ ذُو القُوَّةِ الْمَتِينِ وَأَمَّا كَرَامَاتُهُ وَآثَارُ بَرَكَتِهِ فَهِيَ شَهِيرَةٌ كَثِيرَةٌ وَلَا نَقْدِرُ عَلَى اسْتِكْمَالِهَ أَوْطَرَفٍ مِنْهَا بِالْبَيَانِ مُنْتَشِرَةٌ فِي نَوَاحِيَ الْهِنْدِ وَخَارِجَ الْبُلْدَانِ يَلْتَجِئُ إِلَيْهَا كُلَّ يَوْمٍ وَلَيْلَةٍ جَمُّ غَفِيرٌ مِنَ الرَّاغِبِينَ مِنَ الْكُفَّارِ وَالْمُسْلِمِينَ وَتَتَابَعُ الزَّيَارَاتُ وَالصَّدَقَاتُ بِلا تَأَنَّ وَلَا تَوَانٍ وَيَرْجِعُونَ بِنَيْلِ مَآمِلِهِمْ وَدَفْعِ آفَاتِهِمْ وَأَسْقَامِهِمْ فَرِحِينَ مُسْتَبْشِرِينَ وَيَتَلَقَّى بَعْضُ الْخَوَاصٌ بَعْضَ الْوِلايَةِ وَالْإِجَازَةِ وَالتَّزْكِيَةِ وَبِالْكَرَامَةِ آثِلِينَ وَبِالْجُمْلَةِ إِنَّهُ قُطْبُ مِنْ أَقْطَابِ اللَّهِ فِي الْهِنْدِ وَسُلْطَانُ الصَّالِحِينَ وَرَئِيسُ الْعَارِفِينَ وَمَلْجَأُ اللأَجِئِينَ أَفَاضَ اللَّهُ عَلَيْنَا مِنْ فَيْضِهِ الْمُبِينِ وَالْمُرَاقَبَاتِ وَالإِتْقَانِ حَتَّى بَلَغَ مِنَ الْمَلِكِ الدَّيَّانِ ';
 
   static const String arabic3baith1 =
-      'صَلَوَاتِي عَلَى  النَّبِيِّ  وَسَلَامِي\n'
       'يَا مَلَاذَ   الْخَائِفِينَ   وَالنَّجَاءِ\n'
       'كُنْتَ قُطْبًا   فِي نُطْفَةِ   الأَبَوَاءِ\n'
       'قَلَّبْتَ  تُرْبَةَ  هِنْدِ  الْأَعْدَاءِ\n'
@@ -217,7 +231,6 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
       'مَا دَامَتْ قَطْرَاتُ مِنْ جَوَ السَّمَاءِ\n';
 
   static const String arabic3baith2 =
-      'عَلَى خَيْرِ الْأَنَامِ بَدْرِ التَّمَامِ\n'
       'يَا شَيْخَنَا مُعِينَ الدِّينِ مُنَائِي\n'
       'جِئْتَنَا  تَهْدِينَا  لِدِينِ الْهَنَاءِ\n'
       'مِسْكًا  يَفُوحُ  بِهِ  أَهْلَ الثَّنَاءِ\n'
@@ -236,8 +249,6 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
       'وَوَجَدْنَا فِي سِيرَةِ مَنَاقِبِهِ أَنَّ الْوَلِيُّ رَضِيَ اللَّهُ عَنْهُ كَانَ يُسَافِرُ إِلَى مَكَّةَ كُلَّ لَيْلَةٍ بَعْدَ الْعِشَاءِ يَطُوفُ الْكَعْبَةَ وَيَرْجِعُ قَبْلَ الْفَجْرِ إِلَى أَجْمِيرَ وَقَدْ شَاعَ هَذَا الْخَبَرُ فِي الْبِلَادِ أَيْضًا مِنْ أَجَلٌ مَا أَعْطَاهُ اللهُ الْمُقْتَدِرُ وَتُوُفِّيَ رَضِيَ اللَّهُ عَنْهُ لَيْلَةَ الإِثْنَيْنِ وَقْتَ السَّحَرِ السَّادِسَ مِنْ شَهْرِ رَجَبٍ مُضَرْ سَنَةَ الثَّالِثَةَ وَالثَّلَاثِينَ وَسِتَمِأَةٍ مِنْ هِجْرَةِ سَيِّدِ الْبَشَرِ وَلَهُ سِتَّةٌ وَتِسْعُونَ مِنَ الْعُمُرِ وَدُفِنَ فِي مَسْكَنِهِ مِنَ الْحُجَرِ وَلَهُ مِنَ الْكَرَامَاتِ مَا لَا تُحَدُّ وَلَا تُحْصَرُ وَهَذِهِ مِنْ لَّدُنْ إِلَى الْآنَ مُسْتَمِرٌّ فَنَقْتَصِرُ عَلَى مَا ذُكِرَ إِنَّ فِي ذَلِكَ لَذِكْرَى فَهَلْ مِنْ مُدَّكِرٍ وَصَلَّى وَسَلَّمَ عَلَى سَيِّدِنَا صَاحِبِ الشَّفَاعَةِ وَالْحَوْضِ الْكَوْثَرِ وَعَلَى آلِهِ وَصَحَابَتِهِ وَتُبَّاعِهِ مَا دَامَتِ الْكَائِنَاتُ تُسَبِّحُ فِي الْآصَالِ وَالْبُكَرِ جَمَعَنَا اللَّهُ وَإِيَّاهُمْ فِي مَقْعَدِ صِدْقٍ عِنْدَ مَلِيكٍ مُقْتَدِرٍ وَسَلَّمَنَا مِنَ الْآفَاتِ وَالسَّقَرِ وَبَلَّغَنَا إِلَى مَقَاصِدِنَا مَعَ مَنْ لَنَا بِجَاهِ الْوَلِيِّ فِي الأَجْمِيرِ وَسَائِرِ الْأَبْرَارِ وَالْأَخْيَارِ آمِينَ';
 
   static const String arabic4baith1 =
-      'صَلَوةُ اللهِ سَلَامُ اللهِ\n'
-      'صَلَوةُ اللهِ سَلَامُ اللهِ\n'
       'تَقَبَّلْ دَعْوَتِي بَارِى\n'
       'وَأَهْلِ الْأُحدِ وَالْبَدْرِ\n'
       'وَبَاقِي الأَنْبِيَا طُرِّ\n'
@@ -268,8 +279,6 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
       'تَقَبَّلْ دَعْوَتِي بَارِى\n';
 
   static const String arabic4baith2 =
-      'عَلَى طَهَ رَسُولِ اللهِ\n'
-      'عَلَى يس حَبِيبِ اللهِ\n'
       'بِجَاهِ نَبِيِّنَا الْخَيْرِ\n'
       'وَجَاهِ الشَّيْخِ أَجْمِيرِي\n'
       'وَسَائِرِ صَحْبِهِ الْبَرِّ\n'
@@ -328,7 +337,15 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
         children: [
           Expanded(
             child: Scrollbar(
+              controller: _scrollController,
+              thumbVisibility: true,
+              thickness: 6.0,
+              radius: const Radius.circular(3.0),
               child: SingleChildScrollView(
+                controller: _scrollController,
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
                 child: Column(
                   children: [
                     // First Container (Prose) - Arabic 1
@@ -349,13 +366,13 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                               color: Colors.redAccent,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 12),
                           Text(
                             arabic1,
                             textDirection: TextDirection.rtl,
                             style: GoogleFonts.amiri(
-                              fontSize: 16,
-                              height: 2.5,
+                              fontSize: 18.0,
+                              height: 2.2,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -368,7 +385,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                     // Second Container (Couplets/Baith) - Arabic Baith 1 & 2
                     StyledContainer(
                       borderColor: borderColor,
-                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+                      margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),
                       showShadow: true,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -385,7 +402,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                         text: baith2,
                                         style: GoogleFonts.amiri(
                                           fontSize: 16,
-                                          height: 3,
+                                          height: 1.5,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.redAccent,
                                           wordSpacing: 30,
@@ -393,6 +410,17 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                       ),
                                     ],
                                   ),
+                                ),
+
+                                const SizedBox(height: 10),
+                                Text('عَلَى الْمُصْطَفَى الْمُخْتَارِ خَيْرِ الْبَرِيَّةِ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
                                 ),
                                 Container(
                                   height: 1,
@@ -417,12 +445,12 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                               ],
                             ),
                           ),
-                          // Vertical Separator Line - FIXED: Removed infinite height
+                          // Vertical Separator Line
                           Container(
                             width: 1,
                             color: borderColor,
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            height: 670, // Fixed height instead of double.infinity
                           ),
                           Expanded(
                             child: Column(
@@ -436,7 +464,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                         text: baith1,
                                         style: GoogleFonts.amiri(
                                           fontSize: 16,
-                                          height: 3,
+                                          height: 1.5,  // Reduced from 3 to decrease space
                                           fontWeight: FontWeight.bold,
                                           color: Colors.redAccent,
                                           wordSpacing: 20,
@@ -444,6 +472,17 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                       ),
                                     ],
                                   ),
+                                ),
+
+                                const SizedBox(height: 10),
+                                Text('صَلوةٌ  وَتَسْلِيمُ  وَأَزْكَى  تَحِيَّةٍ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
                                 ),
                                 Container(
                                   height: 1,
@@ -458,7 +497,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                   text: TextSpan(
                                     text: arabicbaith1,
                                     style: GoogleFonts.amiri(
-                                      fontSize: 16,
+                                      fontSize: 15.9,
                                       height: 3,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
@@ -476,15 +515,16 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                     StyledContainer(
                       text: arabic2,
                       fontSize: 18.0,
-                      lineHeight: 2.1,
+                      lineHeight: 2.2,
                       borderColor: borderColor,
-                      margin: const EdgeInsets.fromLTRB(16, 10, 16, 12),
+                      fontWeight: FontWeight.bold,
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                     ),
 
                     // Fourth Container (Couplets/Baith) - Arabic Baith 2 (set 1 & 2)
                     StyledContainer(
                       borderColor: borderColor,
-                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+                      margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),
                       showShadow: true,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -501,7 +541,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                         text: baith2,
                                         style: GoogleFonts.amiri(
                                           fontSize: 16,
-                                          height: 3,
+                                          height: 1.5,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.redAccent,
                                           wordSpacing: 30,
@@ -510,6 +550,15 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                     ],
                                   ),
                                 ),
+                              Text('عَلَى  حَبِيبِكَ خَيْرِ الْخَلْقِ كُلِّهِم\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
                                 Container(
                                   height: 1,
                                   color: borderColor,
@@ -517,6 +566,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                       vertical: 0, horizontal: 4.0),
                                   width: double.infinity,
                                 ),
+                                const SizedBox(height: 10),
                                 RichText(
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
@@ -537,8 +587,8 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                           Container(
                             width: 1,
                             color: borderColor,
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            height: 900, // Fixed height instead of double.infinity
                           ),
                           Expanded(
                             child: Column(
@@ -552,7 +602,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                         text: baith1,
                                         style: GoogleFonts.amiri(
                                           fontSize: 16,
-                                          height: 3,
+                                          height: 1.5,  // Reduced from 3 to decrease space
                                           fontWeight: FontWeight.bold,
                                           color: Colors.redAccent,
                                           wordSpacing: 20,
@@ -561,6 +611,15 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                     ],
                                   ),
                                 ),
+                              Text('مَوْلايَ صَلَّ وَسَلَّمْ دَائِمًا  أَبَدًا\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
                                 Container(
                                   height: 1,
                                   color: borderColor,
@@ -568,6 +627,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                       vertical: 0, horizontal: 4.0),
                                   width: double.infinity,
                                 ),
+                                const SizedBox(height: 10),
                                 RichText(
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
@@ -592,15 +652,16 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                     StyledContainer(
                       text: arabic3,
                       fontSize: 18.0,
-                      lineHeight: 2.1,
+                      lineHeight: 2.2,
                       borderColor: borderColor,
-                      margin: const EdgeInsets.fromLTRB(16, 10, 16, 12),
+                      fontWeight: FontWeight.bold,
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                     ),
 
                     // Sixth Container (Couplets/Baith) - Arabic Baith 3 (set 1 & 2)
                     StyledContainer(
                       borderColor: borderColor,
-                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+                      margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),
                       showShadow: true,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -617,7 +678,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                         text: baith2,
                                         style: GoogleFonts.amiri(
                                           fontSize: 16,
-                                          height: 3,
+                                          height: 1.5,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.redAccent,
                                           wordSpacing: 30,
@@ -626,6 +687,15 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                     ],
                                   ),
                                 ),
+                                Text('عَلَى خَيْرِ الْأَنَامِ بَدْرِ التَّمَامِ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
                                 Container(
                                   height: 1,
                                   color: borderColor,
@@ -633,6 +703,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                       vertical: 0, horizontal: 4.0),
                                   width: double.infinity,
                                 ),
+                                const SizedBox(height: 10),
                                 RichText(
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
@@ -653,8 +724,8 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                           Container(
                             width: 1,
                             color: borderColor,
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            height: 730, // Fixed height instead of double.infinity
                           ),
                           Expanded(
                             child: Column(
@@ -668,7 +739,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                         text: baith1,
                                         style: GoogleFonts.amiri(
                                           fontSize: 16,
-                                          height: 3,
+                                          height: 1.5,  // Reduced from 3 to decrease space
                                           fontWeight: FontWeight.bold,
                                           color: Colors.redAccent,
                                           wordSpacing: 20,
@@ -677,6 +748,15 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                     ],
                                   ),
                                 ),
+                                Text('صَلَوَاتِي عَلَى  النَّبِيِّ  وَسَلَامِي\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
                                 Container(
                                   height: 1,
                                   color: borderColor,
@@ -684,6 +764,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                       vertical: 0, horizontal: 4.0),
                                   width: double.infinity,
                                 ),
+                                const SizedBox(height: 10),
                                 RichText(
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
@@ -708,15 +789,16 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                     StyledContainer(
                       text: arabic4,
                       fontSize: 18.0,
-                      lineHeight: 2.1,
+                      lineHeight: 2.2,
                       borderColor: borderColor,
-                      margin: const EdgeInsets.fromLTRB(16, 10, 16, 12),
+                      fontWeight: FontWeight.bold,
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                     ),
 
                     // Eighth Container (Couplets/Baith) - Arabic Baith 4 (set 1 & 2)
                     StyledContainer(
                       borderColor: borderColor,
-                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                       showShadow: true,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -733,7 +815,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                         text: baith2,
                                         style: GoogleFonts.amiri(
                                           fontSize: 16,
-                                          height: 3,
+                                          height: 1.5,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.redAccent,
                                           wordSpacing: 30,
@@ -742,6 +824,18 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                     ],
                                   ),
                                 ),
+                              Text('عَلَى طَهَ رَسُولِ اللهِ\n'
+                                'عَلَى يس حَبِيبِ اللهِ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  height: 2.2,
+                                  wordSpacing: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
                                 Container(
                                   height: 1,
                                   color: borderColor,
@@ -749,6 +843,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                       vertical: 0, horizontal: 4.0),
                                   width: double.infinity,
                                 ),
+                                const SizedBox(height: 10),
                                 RichText(
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
@@ -757,6 +852,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                     style: GoogleFonts.amiri(
                                       fontSize: 16,
                                       height: 3,
+                                      wordSpacing: 10,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     ),
@@ -769,8 +865,8 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                           Container(
                             width: 1,
                             color: borderColor,
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            height: 1500, // Fixed height instead of double.infinity
                           ),
                           Expanded(
                             child: Column(
@@ -784,7 +880,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                         text: baith1,
                                         style: GoogleFonts.amiri(
                                           fontSize: 16,
-                                          height: 3,
+                                          height: 1.5,  // Reduced from 3 to decrease space
                                           fontWeight: FontWeight.bold,
                                           color: Colors.redAccent,
                                           wordSpacing: 20,
@@ -793,6 +889,18 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                     ],
                                   ),
                                 ),
+                              Text('صَلَوةُ اللهِ سَلَامُ اللهِ\n'
+                                'صَلَوةُ اللهِ سَلَامُ اللهِ\n',
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.amiri(
+                                  fontSize: 16,
+                                  height: 2.2,
+                                  wordSpacing: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                ),
                                 Container(
                                   height: 1,
                                   color: borderColor,
@@ -800,6 +908,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                       vertical: 0, horizontal: 4.0),
                                   width: double.infinity,
                                 ),
+                                const SizedBox(height: 10),
                                 RichText(
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
@@ -808,6 +917,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                                     style: GoogleFonts.amiri(
                                       fontSize: 16,
                                       height: 3,
+                                      wordSpacing: 10,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     ),
@@ -825,7 +935,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                       fontSize: 18.0,
                       lineHeight: 2.1,
                       borderColor: borderColor,
-                      margin: const EdgeInsets.fromLTRB(16, 10, 16, 12),
+                      margin: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -846,7 +956,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                             textDirection: TextDirection.rtl,
                             style: GoogleFonts.amiri(
                               fontSize: 18.0,
-                              height: 2.1,
+                              height: 2.3,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -855,6 +965,7 @@ class _AjmeerMoulidScreenState extends State<AjmeerMoulidScreen> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 66),
                   ],
                 ),
               ),
