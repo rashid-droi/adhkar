@@ -1,3 +1,4 @@
+import 'moulid/rifaee_moulid_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'moulid/ajmeer_moulid_screen.dart';
@@ -75,6 +76,11 @@ class MoulidScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => BadrMoulidScreen()),
+                  );
+                } else if(buttonTitles[index] == 'Rifaee Moulid') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RifaeeMoulidScreen())
                   );
                 }
               },
