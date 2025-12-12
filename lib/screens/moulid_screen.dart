@@ -1,9 +1,11 @@
+import 'moulid/muhiyudeen_moulid_screen.dart';
 import 'moulid/rifaee_moulid_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'moulid/ajmeer_moulid_screen.dart';
 import 'moulid/manqoos_moulid_screen.dart';
 import 'moulid/badar_moulid_screen.dart';
+import 'moulid/davooful_hakeem_moulid_screen.dart';
 
 class MoulidScreen extends StatelessWidget {
   const MoulidScreen({super.key});
@@ -81,6 +83,16 @@ class MoulidScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => RifaeeMoulidScreen())
+                  );
+                } else if(buttonTitles[index] == 'Muhyudeen Moulid') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MuhyudeenMoulidScreen())
+                  );
+                } else if(buttonTitles[index] == 'Davoodul Hakeem (r) Moulid') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DavoofulHakeemMoulidScreen())
                   );
                 }
               },
