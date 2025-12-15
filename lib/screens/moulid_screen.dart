@@ -6,6 +6,7 @@ import 'moulid/ajmeer_moulid_screen.dart';
 import 'moulid/manqoos_moulid_screen.dart';
 import 'moulid/badar_moulid_screen.dart';
 import 'moulid/davooful_hakeem_moulid_screen.dart';
+import 'moulid/sharafal_anam_moulid_screen.dart';
 
 class MoulidScreen extends StatelessWidget {
   const MoulidScreen({super.key});
@@ -93,6 +94,11 @@ class MoulidScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => DavoofulHakeemMoulidScreen())
+                  );
+                } else if(buttonTitles[index] == 'Sharafal Anam Moulid') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SharafalAnamMoulidScreen())
                   );
                 }
               },

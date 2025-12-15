@@ -1,6 +1,13 @@
 import 'swalath/alamu_swalath_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'swalath/friday_swalath_screen.dart';
+import 'swalath/munajath_screen.dart';
+import 'swalath/nariyath_swalath_screen.dart';
+import 'swalath/swalathul_munjiyath_screen.dart';
+import 'swalath/thaju_swalath_screen.dart';
+import 'swalath/swalathul_fathih_screen.dart';
+import 'swalath/thwibbu_swalath_screen.dart';
 
 class SwalathScreen extends StatelessWidget {
   const SwalathScreen({super.key});
@@ -59,7 +66,49 @@ class SwalathScreen extends StatelessWidget {
                 if  (buttonTitles [index] == 'Alamu Swalath') {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const StaticQuranPage()),
+                    MaterialPageRoute(builder: (context) => const AlamuSwalathScreen()),
+                  );
+                }
+                else if (buttonTitles [index] == 'Friday Swalath') {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FridaySwalathScreen())
+                  );
+                }
+                else if (buttonTitles [index] == 'Munajath') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MunajathScreen())
+                  );
+                }
+                else if (buttonTitles [index] == 'Nariyath Swalath') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const NariyathSwalathScreen())
+                  );
+                }
+                else if (buttonTitles [index] == 'Swalath Munjiyath') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SwalathulMunjiyathScreen())
+                  );
+                }
+                else if (buttonTitles [index] == 'Thaju Swalath') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ThajuSwalathScreen())
+                  );
+                }
+                else if (buttonTitles [index] == 'Swalathul Fathih') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SwalathulFathihScreen())
+                  );
+                }
+                else if (buttonTitles [index] == 'Swalathu Thwibb') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SwalathuthwibbScreen())
                   );
                 }
               },
